@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam Hodgins - GIS Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .nav-link {
+            @apply px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700;
+        }
+        .nav-link-active {
+            @apply bg-gray-900 text-white;
+        }
+        .project-card {
+            @apply bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105;
+        }
+        .project-image-placeholder {
+            background-color: #e0e0e0; /* Light gray for placeholder */
+            background-image: url('https://placehold.co/600x400/e0e0e0/777777?text=GIS+Project+Map');
+            background-size: cover;
+            background-position: center;
+            height: 200px; /* Fixed height for placeholder */
+        }
+        .section-title {
+            @apply text-3xl sm:text-4xl font-bold text-gray-800 mb-12 text-center;
+        }
+        .btn {
+            @apply px-6 py-3 rounded-lg font-semibold text-white shadow-md transition-transform duration-150;
+        }
+        .btn-primary {
+            @apply bg-sky-600 hover:bg-sky-700 active:bg-sky-800;
+        }
+        .btn-secondary {
+            @apply bg-gray-600 hover:bg-gray-700 active:bg-gray-800;
+        }
+        /* Custom scrollbar for aesthetics (optional) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-700">
+
+    <nav class="bg-gray-800 sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-white font-bold text-xl">Liam Hodgins GIS</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="nav-link nav-link-active" id="nav-home">Home</a>
+                        <a href="#about" class="nav-link" id="nav-about">About</a>
+                        <a href="#projects" class="nav-link" id="nav-projects">Projects</a>
+                        <a href="#contact" class="nav-link" id="nav-contact">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="hamburger-icon" class="h-6 w-6 block" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                        <svg id="close-icon" class="h-6 w-6 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="md:hidden hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block nav-link nav-link-active">Home</a>
+                <a href="#about" class="block nav-link">About</a>
+                <a href="#projects" class="block nav-link">Projects</a>
+                <a href="#contact" class="block nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="bg-cover bg-center bg-fixed" style="background-image: url('https://placehold.co/1920x1080/334155/e2e8f0?text=Geospatial+Background'); height: calc(100vh - 4rem);">
+        <div class="h-full flex flex-col justify-center items-center bg-black bg-opacity-50">
+            <div class="text-center p-6">
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4">Liam Hodgins</h1>
+                <p class="text-xl sm:text-2xl text-gray-200 mb-8">Innovative GIS Solutions with Open Source Technology</p>
+                <a href="#projects" class="btn btn-primary text-lg">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-16 sm:py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title">About Me</h2>
+            <div class="text-center md:text-left md:flex md:items-center md:space-x-10">
+                <div class="md:w-1/3 mb-8 md:mb-0">
+                    <img src="https://placehold.co/400x400/cbd5e1/475569?text=Liam+H." alt="Liam Hodgins" class="rounded-full shadow-xl mx-auto w-48 h-48 md:w-64 md:h-64 object-cover">
+                </div>
+                <div class="md:w-2/3">
+                    <p class="text-lg text-gray-600 mb-4 leading-relaxed">
+                        Hello! I'm Liam Hodgins, a passionate GIS professional dedicated to leveraging the power of open-source mapping tools to solve real-world geographical challenges. With a strong foundation in spatial analysis, data visualization, and web mapping, I enjoy transforming complex datasets into insightful and actionable information.
+                    </p>
+                    <p class="text-lg text-gray-600 mb-4 leading-relaxed">
+                        My expertise includes working with tools like <strong class="text-sky-700">QGIS</strong> for desktop analysis, <strong class="text-sky-700">Leaflet.js</strong> and <strong class="text-sky-700">OpenLayers</strong> for interactive web maps, and <strong class="text-sky-700">PostGIS</strong> for robust spatial data management. I'm always eager to explore new technologies and methodologies to enhance my GIS capabilities.
+                    </p>
+                    <p class="text-lg text-gray-600 leading-relaxed">
+                        This portfolio showcases some of my recent projects where I've applied these skills to deliver impactful results.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 sm:py-24 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="section-title">My GIS Projects</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="project-card">
+                    <div class="project-image-placeholder" style="background-image: url('https://placehold.co/600x400/60a5fa/ffffff?text=Urban+Sprawl+Analysis');"></div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Urban Sprawl Analysis</h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Analyzed urban expansion patterns over two decades using satellite imagery and QGIS. Developed metrics to quantify sprawl and visualized changes using time-series maps.
+                            <br><strong class="text-sky-700">Tools:</strong> QGIS, GDAL, Python.
+                        </p>
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium">Learn More &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-placeholder" style="background-image: url('https://placehold.co/600x400/34d399/ffffff?text=Watershed+Delineation');"></div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Interactive Watershed Map</h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Created an interactive web map displaying watershed boundaries and hydrological data for a local conservation authority. Users can click on watersheds to get detailed information.
+                            <br><strong class="text-sky-700">Tools:</strong> Leaflet.js, GeoJSON, PostGIS, QGIS.
+                        </p>
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium">View Map &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-placeholder" style="background-image: url('https://placehold.co/600x400/fbbf24/ffffff?text=Renewable+Energy+Siting');"></div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Renewable Energy Siting Tool</h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Developed a suitability model for identifying optimal locations for solar panel installations using various environmental and socio-economic factors. Visualized results using OpenLayers.
+                            <br><strong class="text-sky-700">Tools:</strong> OpenLayers, Python (Geopandas), GRASS GIS.
+                        </p>
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium">Explore Tool &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-placeholder" style="background-image: url('https://placehold.co/600x400/f87171/ffffff?text=Public+Transit+Access');"></div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Public Transit Accessibility Study</h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Assessed public transit accessibility to essential services (hospitals, schools, grocery stores) for different neighborhoods. Generated isochrone maps and accessibility scores.
+                            <br><strong class="text-sky-700">Tools:</strong> QGIS (Network Analysis), pgRouting, PostGIS.
+                        </p>
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium">Read Study &rarr;</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image-placeholder" style="background-image: url('https://placehold.co/600x400/a78bfa/ffffff?text=Forest+Fire+Risk+Mapping');"></div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-2">Forest Fire Risk Assessment</h3>
+                        <p class="text-gray-600 mb-4 text-sm">
+                            Modeled and mapped forest fire risk zones based on vegetation type, topography, climate data, and proximity to human settlements. The interactive map allows for dynamic querying of risk levels.
+                            <br><strong class="text-sky-700">Tools:</strong> R (sf, terra), QGIS, Leaflet.js.
+                        </p>
+                        <a href="#" class="text-sky-600 hover:text-sky-800 font-medium">See Risk Map &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 sm:py-24 bg-white">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                I'm always excited to discuss new projects, collaborations, or opportunities in the GIS field.
+                Feel free to reach out!
+            </p>
+            <div class="space-y-4">
+                <p class="text-xl text-gray-700">
+                    <strong class="text-sky-700">Email:</strong> <a href="mailto:liam.hodgins.gis@example.com" class="hover:underline">liam.hodgins.gis@example.com</a>
+                </p>
+                <p class="text-xl text-gray-700">
+                    <strong class="text-sky-700">LinkedIn:</strong> <a href="https://www.linkedin.com/in/liamhodginsgis" target="_blank" rel="noopener noreferrer" class="hover:underline">linkedin.com/in/liamhodginsgis</a>
+                </p>
+                <p class="text-xl text-gray-700">
+                    <strong class="text-sky-700">GitHub:</strong> <a href="https://github.com/liamhodginsgis" target="_blank" rel="noopener noreferrer" class="hover:underline">github.com/liamhodginsgis</a>
+                </p>
+            </div>
+            <div class="mt-12 pt-8 border-t border-gray-200">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">Or Send Me a Message</h3>
+                <form action="#" method="POST" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700 text-left">Full Name</label>
+                        <input type="text" name="name" id="name" autocomplete="name" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="Your Name">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700 text-left">Email Address</label>
+                        <input type="email" name="email" id="email" autocomplete="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700 text-left">Message</label>
+                        <textarea id="message" name="message" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-sky-500 focus:border-sky-500 sm:text-sm" placeholder="Your message..."></textarea>
+                    </div>
+                    <div>
+                        <button type="submit" class="w-full btn btn-primary py-3">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+                 <p class="mt-4 text-xs text-gray-500">Note: This is a static form. For functionality, backend integration is needed.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-800 text-gray-300 py-8 text-center">
+        <p>&copy; <span id="currentYear"></span> Liam Hodgins. All rights reserved.</p>
+        <p class="text-sm">Powered by Open Source GIS & Tailwind CSS</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburgerIcon = document.getElementById('hamburger-icon');
+        const closeIcon = document.getElementById('close-icon');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            hamburgerIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        });
+
+        // Smooth scroll for navigation links & active state
+        const navLinks = document.querySelectorAll('nav a[href^="#"]');
+        const mobileNavLinks = document.querySelectorAll('#mobile-menu a[href^="#"]');
+        const allNavLinks = [...navLinks, ...mobileNavLinks];
+
+        allNavLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    // Calculate offset for fixed navbar
+                    const navbarHeight = document.querySelector('nav').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+        
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+                // Close mobile menu if open
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    hamburgerIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Active navigation link highlighting on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const desktopNavItems = document.querySelectorAll('nav .hidden.md\\:block a');
+        const mobileNavItems = document.querySelectorAll('#mobile-menu a');
+
+        function setActiveLink() {
+            let currentSectionId = '';
+            const navbarHeight = document.querySelector('nav').offsetHeight;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - navbarHeight - 50; // Adjusted offset
+                if (window.pageYOffset >= sectionTop) {
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+            
+            // Fallback to #home if no section is active (e.g., at the very top or bottom beyond sections)
+            if (!currentSectionId && window.pageYOffset < sections[0].offsetTop - navbarHeight - 50) {
+                 currentSectionId = 'home';
+            }
+
+
+            [desktopNavItems, mobileNavItems].forEach(navSet => {
+                navSet.forEach(link => {
+                    link.classList.remove('nav-link-active');
+                    if (link.getAttribute('href') === `#${currentSectionId}`) {
+                        link.classList.add('nav-link-active');
+                    }
+                });
+            });
+        }
+        window.addEventListener('scroll', setActiveLink);
+        window.addEventListener('load', setActiveLink); // Set active link on page load
+
+
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
