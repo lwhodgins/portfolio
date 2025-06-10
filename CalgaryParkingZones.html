@@ -1,92 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Calgary On-Street Parking Zones Map</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- MapLibre GL JS CSS -->
-    <link href="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.css" rel="stylesheet" />
-    <style>
-        #map { height: 100vh; width: 100vw; }
-        .maplibregl-popup {
-            max-width: 200px;
-        }
-    </style>
-</head>
-<body>
-    <div id="map"></div>
-    <!-- MapLibre GL JS -->
-    <script src="https://unpkg.com/maplibre-gl@3.6.1/dist/maplibre-gl.js"></script>
-    <script>
-        // Initialize the map
-        const map = new maplibregl.Map({
-            container: 'map',
-            style: 'https://demotiles.maplibre.org/style.json', // Open source style
-            center: [-114.0719, 51.0447], // [lng, lat] for Calgary
-            zoom: 12
-        });
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calgary Parking Map</title>
+  <script src="https://cdn.maptiler.com/maptiler-sdk-js/v3.2.0/maptiler-sdk.umd.min.js"></script>
+  <link href="https://cdn.maptiler.com/maptiler-sdk-js/v3.2.0/maptiler-sdk.css" rel="stylesheet" />
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  </style>    
+  </head>
+  <body>
+  <div id="map"></div>
+  <a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>
 
-        // Add navigation controls
-        map.addControl(new maplibregl.NavigationControl());
+  <script>
+  maptilersdk.config.apiKey = 'thMiYdooJJCtbcD1eXd6';
+  const map = new maptilersdk.Map({
+    container: 'map',
+    style: 'maptilersdk.MapStyle.STREETS',
+    center: [-114.0719, 51.0447], // Calgary [lng, lat]
+    zoom: 13
+  });
 
-        // Fetch GeoJSON data and add as a source/layer
-        fetch('https://data.calgary.ca/resource/rhkg-vwwp.geojson')
-            .then(response => response.json())
-            .then(data => {
-                map.on('load', () => {
-                    // Add GeoJSON source
-                    map.addSource('zones', {
-                        type: 'geojson',
-                        data: data
-                    });
+  let parkingZonesData = null;
 
-                    // Add a line layer for the zones
-                    map.addLayer({
-                        id: 'zones-line',
-                        type: 'line',
-                        source: 'zones',
-                        paint: {
-                            'line-color': '#0074D9',
-                            'line-width': 2,
-                            'line-opacity': 0.7
-                        }
-                    });
+  // Fetch and store the GeoJSON
+  fetch('https://data.calgary.ca/resource/rhkg-vwwp.geojson')
+    .then(response => response.json())
+    .then(data => {
+      // Filter features for ZONE_TYPE === 'Parking Zone'
+      data.features = data.features.filter(
+        f => f.properties && f.properties.ZONE_TYPE === 'Parking Zone'
+      );
+      parkingZonesData = data;
+      addParkingZonesLayer();
+    });
 
-                    // Add a fill layer for polygons (if any)
-                    map.addLayer({
-                        id: 'zones-fill',
-                        type: 'fill',
-                        source: 'zones',
-                        paint: {
-                            'fill-color': '#0074D9',
-                            'fill-opacity': 0.2
-                        },
-                        filter: ['==', '$type', 'Polygon']
-                    });
+  function addParkingZonesLayer() {
+    if (!parkingZonesData || !map.getStyle()) return;
+    if (map.getSource('parkingzones')) return;
 
-                    // Popup on click
-                    map.on('click', 'zones-line', (e) => {
-                        const feature = e.features[0];
-                        if (feature.properties && feature.properties.zone) {
-                            new maplibregl.Popup()
-                                .setLngLat(e.lngLat)
-                                .setHTML("Zone: " + feature.properties.zone)
-                                .addTo(map);
-                        }
-                    });
+    map.addSource('parkingzones', {
+      type: 'geojson',
+      data: parkingZonesData
+    });
 
-                    // Change cursor to pointer on hover
-                    map.on('mouseenter', 'zones-line', () => {
-                        map.getCanvas().style.cursor = 'pointer';
-                    });
-                    map.on('mouseleave', 'zones-line', () => {
-                        map.getCanvas().style.cursor = '';
-                    });
-                });
-            })
-            .catch(error => {
-                console.error('Error loading GeoJSON:', error);
-            });
-    </script>
-</body>
+    // Data-driven color by PRICE_ZONE
+    map.addLayer({
+      id: 'parkingzones-layer',
+      type: 'line',
+      source: 'parkingzones',
+      paint: {
+        'line-color': [
+          'match',
+          ['get', 'PRICE_ZONE'],
+          'A', '#e74c3c',   // Red
+          'B', '#3498db',   // Blue
+          'C', '#2ecc71',   // Green
+          'D', '#f1c40f',   // Yellow
+          /* other */ '#888'
+        ],
+        'line-width': 2
+      }
+    });
+  }
+
+  // Re-add the layer after every style change
+  map.on('style.load', addParkingZonesLayer);
+  </script>    
+  </body>
 </html>
