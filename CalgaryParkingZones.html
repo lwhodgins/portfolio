@@ -26,6 +26,7 @@
     }
 
     .title-block {
+      position: fixed;
       background: linear-gradient(to right, #c8102e, #a60f2d);
       padding: 24px 0 16px 0;
       text-align: center;
@@ -45,7 +46,7 @@
 
     #map {
       position: relative;
-      width: 80%;
+      width: 90%;
       height: calc(100vh - 200px);
       min-height: 0;
       flex: 1 1 auto;
@@ -60,7 +61,7 @@
     }
 
     #controls {
-      width: 15%; /* or whatever width you want */
+      width: 10%; /* or whatever width you want */
       min-width: 220px;
       max-width: 400px;
       height: auto;
@@ -121,12 +122,30 @@
       border-radius: 3px;
       border: 1px solid #ccc;
     }
+
+    @media (max-width: 800px) {
+      .main-content {
+        flex-direction: column;
+      }
+      #controls {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        border-right: none;
+        border-bottom: 3px solid #c8102e;
+        margin-bottom: 8px;
+      }
+      #map {
+        width: 100%;
+        height: 100vh; /* adjust as needed for mobile */
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="title-block">
+  <header class="title-block">
     <h1>Calgary Parking Zones</h1>
-  </div>
+  </header>
   <div class="main-content">
     <div id="controls" class="controls">
       <h2>Controls</h2>
